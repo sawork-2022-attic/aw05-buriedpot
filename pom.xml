@@ -6,6 +6,7 @@
     <modules>
         <module>pos-products</module>
         <module>pos-carts</module>
+        <module>pos-api</module>
         <module>pos-discovery</module>
         <module>pos-gateway</module>
     </modules>
