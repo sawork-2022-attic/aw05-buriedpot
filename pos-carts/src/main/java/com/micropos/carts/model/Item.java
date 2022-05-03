@@ -33,21 +33,23 @@ public class Item implements Serializable {
 
     @Getter
     @Setter
-    @Column(name="item_name")
-    private String name;
+    @Column(name="product_name")
+    private String productName;
 
     @Getter
     @Setter
-    @Column(name="item_price")
-    private double price;
+    @Column(name="product_price")
+    private double productPrice;
 
+/*
     @Getter
     @Setter
     @Column(name="item_image")
     private String image;
+*/
 
     @Getter
     @Setter
-    @Column(name="item_quantity")
+    @Column(name="quantity")
     private int quantity;
 }
