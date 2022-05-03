@@ -10,9 +10,7 @@ import com.micropos.dto.CartItemDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +34,7 @@ public class CartController implements CartsApi {
     }
 
     @Override
+    @PostMapping("/carts/{cartId}")
     public ResponseEntity<CartDto> addItemToCart(Integer cartId, CartItemDto cartItemDto) {
         Cart cart = cartService.getCart(cartId).orElse(null);
         if(cart == null)
@@ -48,11 +47,19 @@ public class CartController implements CartsApi {
     }
 
     @Override
-    public ResponseEntity<CartDto> createCart(CartDto cartDto) {
-        Cart ret = new Cart();
-        cartService.addCart(ret);
-        if(ret == null)
+    @PostMapping("/carts")
+    public ResponseEntity<CartDto> createCart(@RequestBody CartDto cartDto) {
+        Cart ret = cartMapper.toCart(cartDto);
+
+        if(ret == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        ret = cartService.addCart(ret);
+
+        if (ret == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(cartMapper.toCartDto(ret),HttpStatus.OK);
     }
 
