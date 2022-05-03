@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 
 @Entity
-@Table(name="Items")
+@Table(name="items")
 @Accessors(fluent = true, chain = true)
 public class Item implements Serializable {
     /**
@@ -18,7 +18,7 @@ public class Item implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Setter
-    private String id;
+    private Integer id;
 
     @Column(name="cart_id")
     @Getter

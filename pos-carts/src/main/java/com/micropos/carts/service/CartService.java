@@ -1,7 +1,7 @@
 package com.micropos.carts.service;
 
-import com.micropos.cart.model.Cart;
-import com.micropos.cart.model.Item;
+import com.micropos.carts.model.Cart;
+import com.micropos.carts.model.Item;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +15,8 @@ public interface CartService {
     Cart add(Cart cart, Item item);
 
     List<Cart> getAllCarts();
+
+    Cart addCart(Cart cart);
 
     Optional<Cart> getCart(Integer cartId);
 

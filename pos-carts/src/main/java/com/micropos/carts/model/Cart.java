@@ -1,12 +1,31 @@
 package com.micropos.carts.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@Entity
+@Table(name = "Carts")
+@Accessors(fluent = true, chain = true)
 public class Cart implements Serializable {
 
+
+    @Id
+    @GeneratedValue
+    @Getter
+    @Setter
+    private Integer id;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "items", joinColumns = @JoinColumn(name = "cart_id"))
+    @Setter
+    @Getter
     private List<Item> items = new ArrayList<>();
 
     /*public boolean addItem(Item item) {
@@ -16,7 +35,7 @@ public class Cart implements Serializable {
     public double getTotal() {
         double total = 0;
         for (int i = 0; i < items.size(); i++) {
-            total += items.get(i).getQuantity() * items.get(i).getProduct().getPrice();
+            total += items.get(i).quantity() * items.get(i).productPrice();
         }
         return total;
     }
@@ -30,20 +49,20 @@ public class Cart implements Serializable {
         Iterator<Item> it = items.iterator();
         while (it.hasNext()) {
             Item item1 = it.next();
-            if (item1.getProduct().getId().equals(item.getProduct().getId())) {
-                int newAmount = item1.getQuantity() + item.getQuantity();
+            if (item1.productId().equals(item.productId())) {
+                int newAmount = item1.quantity() + item.quantity();
                 if (newAmount <= 0) {
                     it.remove();
                 }
                 else {
-                    item1.setQuantity(newAmount);
+                    item1.quantity(newAmount);
                 }
 
                 System.out.println("has el: " + this);
                 return true;
             }
         }
-        if (item.getQuantity() <= 0) return false;
+        if (item.quantity() <= 0) return false;
         System.out.println("new has el: " + this);
         return items.add(item);
     }
@@ -52,7 +71,7 @@ public class Cart implements Serializable {
         Iterator<Item> it = items.iterator();
         while (it.hasNext()) {
             Item item = it.next();
-            if (item.getProduct().getId().equals(productId)) {
+            if (item.productId().equals(productId)) {
                 it.remove();
                 return true;
             }
@@ -64,9 +83,9 @@ public class Cart implements Serializable {
         Iterator<Item> it = items.iterator();
         while (it.hasNext()) {
             Item item = it.next();
-            if (item.getProduct().getId().equals(productId)) {
+            if (item.productId().equals(productId)) {
                 if (amount > 0) {
-                    item.setQuantity(amount);
+                    item.quantity(amount);
                 }
                 else {
                     it.remove();
@@ -94,7 +113,7 @@ public class Cart implements Serializable {
 
         for (int i = 0; i < items.size(); i++) {
             stringBuilder.append(items.get(i).toString()).append("\n");
-            total += items.get(i).getQuantity() * items.get(i).getProduct().getPrice();
+            total += items.get(i).quantity() * items.get(i).productPrice();
         }
         stringBuilder.append("----------------------\n"  );
 

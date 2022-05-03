@@ -1,7 +1,7 @@
 package com.micropos.products.rest;
 
-import com.micropos.products.api.ProductsApi;
-import com.micropos.products.dto.ProductDto;
+import com.micropos.api.ProductsApi;
+import com.micropos.dto.ProductDto;
 import com.micropos.products.mapper.ProductMapper;
 import com.micropos.products.model.Product;
 import com.micropos.products.service.ProductService;

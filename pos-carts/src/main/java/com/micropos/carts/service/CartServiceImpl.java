@@ -3,10 +3,10 @@ package com.micropos.carts.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.micropos.cart.mapper.CartMapper;
-import com.micropos.cart.model.Cart;
-import com.micropos.cart.model.Item;
-import com.micropos.cart.repository.CartRepository;
+import com.micropos.carts.mapper.CartMapper;
+import com.micropos.carts.model.Item;
+import com.micropos.carts.repository.CartRepository;
+import com.micropos.carts.model.Cart;
 import com.micropos.dto.CartDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -94,5 +94,10 @@ public class CartServiceImpl implements CartService {
     @Override
     public Optional<Cart> getCart(Integer cartId) {
         return cartRepository.findById(cartId);
+    }
+
+    @Override
+    public Cart addCart(Cart cart) {
+        return cartRepository.save(cart);
     }
 }
