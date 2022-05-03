@@ -1,0 +1,73 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Cart
+  license:
+    name: MIT
+paths:
+  /cart:
+    get:
+      summary: List content in the cart
+      operationId: showCart
+      tags:
+        - cart
+      responses:
+        '200':
+          description: All items in the cart
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    Item:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: double
+        quantity:
+          type: int
+
+    Cart:
+      type: object
+      required:
+        - items
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: double
+        quantity:
+          type: int
+    Products:
+      type: array
+      items:
+        $ref: "#/components/schemas/Product"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
