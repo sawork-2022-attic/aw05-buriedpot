@@ -89,7 +89,7 @@ public class CartController implements CartsApi {
     @GetMapping("/carts/{cartId}/total")
     public ResponseEntity<Double> showCartTotal(Integer cartId) {
         double totalAmount =  cartService.checkout(cartId);
-        if(cartId==-1d)
+        if(cartId == -1d)
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(totalAmount);
     }
