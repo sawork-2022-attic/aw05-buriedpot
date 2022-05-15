@@ -5,6 +5,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -13,10 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+
 public class JDRepository implements ProductRepository {
     private List<Product> products = null;
 
     @Override
+
     public List<Product> allProducts() {
         try {
             if (products == null)
@@ -28,6 +33,7 @@ public class JDRepository implements ProductRepository {
     }
 
     @Override
+
     public Product findProduct(String productId) {
         for (Product p : allProducts()) {
             if (p.getId().equals(productId)) {

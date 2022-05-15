@@ -2,7 +2,7 @@ spring:
   application:
     name: pos-carts
 server:
-  port: 0
+  port: 8000
 
 
 eureka:
@@ -12,4 +12,5 @@ eureka:
     registerWithEureka: false
     fetchRegistry: false
   instance:
+    hostname: pos-carts
     instance-id: ${spring.application.name}:${random.uuid}

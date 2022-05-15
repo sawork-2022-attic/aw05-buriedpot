@@ -30,7 +30,7 @@ public class ProductController implements ProductsApi {
     }
 
     @Override
-    @GetMapping("/products/")
+    @GetMapping("/products")
     public ResponseEntity<List<ProductDto>> listProducts(){
         List<ProductDto> products = new ArrayList<>(productMapper.toProductsDto(this.productService.products()));
         if (products.isEmpty()) {
