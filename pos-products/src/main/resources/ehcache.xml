@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="ehcache.xsd">
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
     <!--timeToIdleSeconds 当缓存闲置n秒后销毁 -->
     <!--timeToLiveSeconds 当缓存存活n秒后销毁 -->
     <!-- 缓存配置
