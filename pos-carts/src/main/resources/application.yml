@@ -2,7 +2,7 @@ spring:
   application:
     name: pos-carts
 server:
-  port: 8000
+  port: 8082
 
 
 eureka:

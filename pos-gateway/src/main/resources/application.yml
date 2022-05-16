@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: 8080
 spring:
   application:
     name: pos-gateway
@@ -7,15 +7,15 @@ spring:
     gateway:
       routes:
         - id: products
-          uri: lb://pos-products
+          uri: http://localhost:8081/
           predicates:
             - Path=/api/products/**
         - id: carts
-          uri: lb://pos-carts
+          uri: http://localhost:8082/
           predicates:
             - Path=/api/carts/**
         - id: counter
-          uri: lb://pos-counter
+          uri: http://localhost:8083/
           predicates:
             - Path=/api/counter/**
 

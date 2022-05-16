@@ -2,7 +2,7 @@ spring:
   application:
     name: pos-counter
 server:
-  port: 0
+  port: 8083
 eureka:
   client:
     serviceUrl:
