@@ -87,6 +87,18 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public Cart delete(Cart cart, String productId) {
+        cart.deleteItem(productId);
+        return cart;
+    }
+
+    @Override
+    public Cart empty(Cart cart) {
+        cart.empty();
+        return cart;
+    }
+
+    @Override
     public List<Cart> getAllCarts() {
         return Streamable.of(cartRepository.findAll()).toList();
     }

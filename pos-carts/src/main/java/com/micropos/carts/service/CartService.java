@@ -21,4 +21,8 @@ public interface CartService {
     Optional<Cart> getCart(Integer cartId);
 
     Integer test();
+
+    Cart delete(Cart cart, String productId); // delete an item in the cart by productId
+
+    Cart empty(Cart cart);//
 }

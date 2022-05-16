@@ -5,17 +5,16 @@ import com.micropos.dto.ProductDto;
 import com.micropos.products.mapper.ProductMapper;
 import com.micropos.products.model.Product;
 import com.micropos.products.service.ProductService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api")
 public class ProductController implements ProductsApi {
 
@@ -31,6 +30,7 @@ public class ProductController implements ProductsApi {
 
     @Override
     @GetMapping("/products")
+    @HystrixCommand(fallbackMethod = "listProductsEmpty")
     public ResponseEntity<List<ProductDto>> listProducts(){
         List<ProductDto> products = new ArrayList<>(productMapper.toProductsDto(this.productService.products()));
         if (products.isEmpty()) {
@@ -38,6 +38,16 @@ public class ProductController implements ProductsApi {
         }
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
+
+/*
+    @PostMapping("/products")
+    public ResponseEntity<List<ProductDto>> postListProducts(){
+        List<ProductDto> products = new ArrayList<>(productMapper.toProductsDto(this.productService.products()));
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }*/
 
     @Override
     @GetMapping("/products/{productId}")
@@ -47,7 +57,10 @@ public class ProductController implements ProductsApi {
             return new ResponseEntity<>(productMapper.toProductDto(product), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-
+    public ResponseEntity<List<ProductDto>> listProductsEmpty(){
+        List<ProductDto> products = new ArrayList<>(productMapper.toProductsDto(new ArrayList<>()));
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }

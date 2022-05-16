@@ -52,4 +52,5 @@ public class Item implements Serializable {
     @Setter
     @Column(name="quantity")
     private int quantity;
+
 }

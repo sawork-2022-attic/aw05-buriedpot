@@ -1,11 +1,10 @@
-package com.micropos.products.model;
+package com.micropos.carts.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-
 
 @Data
 @AllArgsConstructor
@@ -21,3 +20,4 @@ public class Product implements Serializable {
         return getId() + "\t" + getName() + "\t" + getPrice();
     }
 }
+

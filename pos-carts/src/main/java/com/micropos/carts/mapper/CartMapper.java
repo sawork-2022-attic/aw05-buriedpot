@@ -2,8 +2,10 @@ package com.micropos.carts.mapper;
 
 import com.micropos.carts.model.Cart;
 import com.micropos.carts.model.Item;
+import com.micropos.carts.model.Product;
 import com.micropos.dto.CartDto;
-import com.micropos.dto.CartItemDto;
+import com.micropos.dto.ItemDto;
+import com.micropos.dto.ItemDto;
 import com.micropos.dto.ProductDto;
 import org.mapstruct.Mapper;
 
@@ -13,73 +15,100 @@ import java.util.List;
 
 @Mapper
 public interface CartMapper {
+    /*Cart toCart(CartDto cartDto);
+
+    CartDto toCartDto(Cart cart);*/
 
     Collection<CartDto> toCartsDto(Collection<Cart> carts);
 
     Collection<Cart> toCarts(Collection<CartDto> carts);
 
+    Collection<ProductDto> toProductsDto(Collection<Product> products);
+
+    Collection<Product> toProducts(Collection<ProductDto> products);
+
+    Product toProduct(ProductDto productDto);
+
+    ProductDto toProductDto(Product product);
+
+    Collection<ItemDto> toItemsDto(Collection<Item> items);
+
+    Collection<Item> toItems(Collection<ItemDto> products);
+
+    Item toItem(ItemDto itemDto);
+
+
+
+
     default Cart toCart(CartDto cartDto) {
+        if (cartDto == null) {
+            return null;
+        }
         return new Cart().id(cartDto.getId())
                 .items(toItems(cartDto.getItems(), cartDto));
     }
 
-    default CartDto toCartDto(Cart cart) {
-        return new CartDto().id(cart.id())
-                .items(toItemDtos(cart.items()));
-    }
-
-    default List<CartItemDto> toItemDtos(List<Item> items) {
-        if (items == null || items.isEmpty()) {
+    default List<Item> toItems(List<ItemDto> itemsDto, CartDto cartDto) {
+        if (itemsDto == null || cartDto == null) {
             return null;
         }
-        List<CartItemDto> list = new ArrayList<>(items.size());
-        for (Item item : items) {
-            list.add(toItemDto(item));
+        List<Item> ret = new ArrayList<>();
+        for (ItemDto itemDto : itemsDto) {
+            ret.add(toItem(itemDto, cartDto));
         }
-
-        return list;
+        return ret;
     }
 
-    default List<Item> toItems(List<CartItemDto> itemDtos, CartDto cartDto) {
-        if (itemDtos == null || itemDtos.isEmpty()) {
+    default Item toItem(ItemDto itemDto, CartDto cartDto) {
+        if (itemDto == null || cartDto == null) {
             return null;
         }
-        List<Item> list = new ArrayList<>(itemDtos.size());
-        for (CartItemDto itemDto : itemDtos) {
-            list.add(toItem(itemDto, cartDto));
-        }
-
-        return list;
-    }
-
-    default Item toItem(CartItemDto itemDto, CartDto cartDto) {
         return new Item().id(itemDto.getId())
+                .productPrice(itemDto.getProduct().getPrice())
                 .cartId(cartDto.getId())
-                .productId(itemDto.getProduct().getId())
-                .productName(itemDto.getProduct().getName())
-                .quantity(itemDto.getAmount())
-                .productPrice(itemDto.getProduct().getPrice());
+                .quantity(itemDto.getQuantity())
+                .productId(itemDto.getProduct().getId());
+
     }
 
-    default Item toItem(CartItemDto itemDto, Integer cartId) {
+    default CartDto toCartDto(Cart cart) {
+        if (cart == null) {
+            return null;
+        }
+        return new CartDto().id(cart.id())
+                .items(toItemDtos(cart.getItems()));
+    }
+
+    default List<ItemDto> toItemDtos(List<Item> items) {
+        if (items == null) {
+            return null;
+        }
+        List<ItemDto> ret = new ArrayList<>();
+        for (Item item : items) {
+            ret.add(toItemDto(item));
+        }
+
+        return ret;
+    }
+
+    default Item toItem(ItemDto itemDto, Integer cartId) {
         return new Item().id(itemDto.getId())
                 .cartId(cartId)
                 .productId(itemDto.getProduct().getId())
                 .productName(itemDto.getProduct().getName())
-                .quantity(itemDto.getAmount())
+                .quantity(itemDto.getQuantity())
                 .productPrice(itemDto.getProduct().getPrice());
     }
 
-    default CartItemDto toItemDto(Item item) {
+    default ItemDto toItemDto(Item item) {
+        ProductDto productDto = new ProductDto();
+        productDto.setId(item.productId());
+        productDto.setName(item.productName());
+        productDto.setPrice(item.productPrice());
 
-        return new CartItemDto().id(item.id())
-                .product(item2ProductDto(item))
-                .amount(item.quantity());
+        return new ItemDto().id(item.id())
+                .product(productDto)
+                .quantity(item.quantity());
     }
 
-    default ProductDto item2ProductDto(Item item) {
-        return new ProductDto().id(item.productId())
-                .name(item.productName())
-                .price(item.productPrice());
-    }
 }

@@ -3,7 +3,7 @@ package com.micropos.api.rest;
 import com.micropos.api.CartsApi;
 import com.micropos.api.service.ApiService;
 import com.micropos.dto.CartDto;
-import com.micropos.dto.CartItemDto;
+import com.micropos.dto.ItemDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

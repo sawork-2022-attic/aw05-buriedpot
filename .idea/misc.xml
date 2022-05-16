@@ -9,6 +9,11 @@
         <option value="$PROJECT_DIR$/pos-discovery/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/pos-service-api/pom.xml" />
+      </set>
+    </option>
   </component>
   <component name="PDMPlugin">
     <option name="skipTestSources" value="false" />

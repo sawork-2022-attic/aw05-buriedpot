@@ -102,8 +102,40 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CartItem'
+              $ref: '#/components/schemas/Item'
         required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: delete an item from cart
+      operationId: deleteItemFromCart
+      tags:
+        - cart
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: The id of the cart to retrieve
+          schema:
+            type: integer
+            format: int32
+        - name: productId
+          in: path
+          required: true
+          description: The id of the product to delete
+          schema:
+            type: string
       responses:
         '200':
           description: Expected response to a valid request
@@ -139,6 +171,32 @@ paths:
               schema:
                 type: number
                 format: double
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /carts/empty:
+    put:
+      summary: empty a cart
+      operationId: emptyCart
+      tags:
+        - cart
+      requestBody:
+        description: The details of the cart.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cart'
+        required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
         default:
           description: unexpected error
           content:
@@ -223,13 +281,13 @@ components:
       type: array
       items:
         $ref: "#/components/schema/Cart"
-    CartItem:
+    Item:
       type: object
       properties:
         id:
           type: integer
           format: int32
-        amount:
+        quantity:
           type: integer
           format: int32
         product:
@@ -243,7 +301,7 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schema/CartItem"
+            $ref: "#/components/schema/Item"
     Product:
       type: object
       required:
