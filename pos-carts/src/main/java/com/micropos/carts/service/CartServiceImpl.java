@@ -112,4 +112,9 @@ public class CartServiceImpl implements CartService {
     public Cart addCart(Cart cart) {
         return cartRepository.save(cart);
     }
+
+    @Override
+    public Cart newCart() {
+        return new Cart();
+    }
 }

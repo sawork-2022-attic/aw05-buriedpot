@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("api")
 public class CartController implements CartsApi {
 
     private CartService cartService;
@@ -75,6 +76,14 @@ public class CartController implements CartsApi {
         if (ret == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(cartMapper.toCartDto(ret),HttpStatus.OK);
+    }
+
+    @GetMapping("/carts/newcart")
+    public ResponseEntity<CartDto> newCart() {
+
+        Cart ret = cartService.newCart();
+
         return new ResponseEntity<>(cartMapper.toCartDto(ret),HttpStatus.OK);
     }
 
